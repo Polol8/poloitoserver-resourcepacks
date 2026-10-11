@@ -123,7 +123,10 @@ def main(root):
     ], {"horn": "poloito:item/shenlong_horn"})
     # One whisker link: a thin rod along +Z; the plugin chains several and swings them.
     whisker = model([el([7, 7, 0], [9, 9, 16], "whisker")], {"whisker": "poloito:item/shenlong_whisker"})
-    for name, m in (("shenlong_head", head), ("shenlong_body", body), ("shenlong_tail", tail), ("shenlong_arm", arm),
+    # Same head with the eyes shut (dark lids instead of red eyes) - the "contemplating" pose.
+    head_closed = json.loads(json.dumps(head))
+    head_closed["textures"]["eye"] = "poloito:item/shenlong_mane"
+    for name, m in (("shenlong_head", head), ("shenlong_head_closed", head_closed), ("shenlong_body", body), ("shenlong_tail", tail), ("shenlong_arm", arm),
                     ("shenlong_whisker", whisker)):
         json.dump(m, open(os.path.join(a, "models", "item", name + ".json"), "w"), indent=1)
         json.dump({"model": {"type": "minecraft:model", "model": "poloito:item/" + name}},
