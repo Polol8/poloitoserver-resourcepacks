@@ -113,7 +113,16 @@ def main(root):
         el([7.5, 11, 4], [8.5, 15, 16], "spine"),
         el([7.5, 1, 8], [8.5, 5, 16], "spine"),
     ])
-    for name, m in (("shenlong_head", head), ("shenlong_body", body), ("shenlong_tail", tail)):
+    # Arm: hangs from the top (attachment at the body), wrist and three claws reaching forward (+Z).
+    arm = model([
+        el([6.5, 7, 5], [9.5, 16, 8], "scales"),              # upper arm
+        el([6, 4, 5], [10, 7, 9.5], "scales"),                # wrist
+        el([6.5, 4.5, 4.5], [9.5, 12, 5], "belly"),           # inner arm plates
+        el([5.6, 1, 8.5], [6.6, 4, 12.5], "horn", {"angle": -22.5, "axis": "x", "origin": [6.1, 4, 8.5]}),
+        el([7.5, 0.5, 9], [8.5, 4, 13.5], "horn", {"angle": -22.5, "axis": "x", "origin": [8, 4, 9]}),
+        el([9.4, 1, 8.5], [10.4, 4, 12.5], "horn", {"angle": -22.5, "axis": "x", "origin": [9.9, 4, 8.5]}),
+    ], {"horn": "poloito:item/shenlong_horn"})
+    for name, m in (("shenlong_head", head), ("shenlong_body", body), ("shenlong_tail", tail), ("shenlong_arm", arm)):
         json.dump(m, open(os.path.join(a, "models", "item", name + ".json"), "w"), indent=1)
         json.dump({"model": {"type": "minecraft:model", "model": "poloito:item/" + name}},
                   open(os.path.join(a, "items", name + ".json"), "w"), indent=1)
