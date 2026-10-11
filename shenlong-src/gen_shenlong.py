@@ -102,8 +102,7 @@ def main(root):
         el([3, 6, -3], [13, 13, 0], "mane"),                  # mane flowing back
         el([4, 12, 0], [5.5, 18, 2], "horn", {"angle": -22.5, "axis": "x", "origin": [4.75, 12, 1]}),
         el([10.5, 12, 0], [12, 18, 2], "horn", {"angle": -22.5, "axis": "x", "origin": [11.25, 12, 1]}),
-        el([-4, 6, 13], [4.5, 6.5, 13.5], "whisker", {"angle": -22.5, "axis": "z", "origin": [4.5, 6.25, 13.25]}),
-        el([11.5, 6, 13], [20, 6.5, 13.5], "whisker", {"angle": 22.5, "axis": "z", "origin": [11.5, 6.25, 13.25]}),
+        # Whiskers are separate animated displays now (shenlong_whisker), not part of the head.
     ], {"mane": "poloito:item/shenlong_mane", "horn": "poloito:item/shenlong_horn",
         "eye": "poloito:item/shenlong_eye", "whisker": "poloito:item/shenlong_whisker"})
     body = model(body_elements((3, 13), 1.5))
@@ -122,7 +121,10 @@ def main(root):
         el([7.5, 0.5, 9], [8.5, 4, 13.5], "horn", {"angle": -22.5, "axis": "x", "origin": [8, 4, 9]}),
         el([9.4, 1, 8.5], [10.4, 4, 12.5], "horn", {"angle": -22.5, "axis": "x", "origin": [9.9, 4, 8.5]}),
     ], {"horn": "poloito:item/shenlong_horn"})
-    for name, m in (("shenlong_head", head), ("shenlong_body", body), ("shenlong_tail", tail), ("shenlong_arm", arm)):
+    # One whisker link: a thin rod along +Z; the plugin chains several and swings them.
+    whisker = model([el([7, 7, 0], [9, 9, 16], "whisker")], {"whisker": "poloito:item/shenlong_whisker"})
+    for name, m in (("shenlong_head", head), ("shenlong_body", body), ("shenlong_tail", tail), ("shenlong_arm", arm),
+                    ("shenlong_whisker", whisker)):
         json.dump(m, open(os.path.join(a, "models", "item", name + ".json"), "w"), indent=1)
         json.dump({"model": {"type": "minecraft:model", "model": "poloito:item/" + name}},
                   open(os.path.join(a, "items", name + ".json"), "w"), indent=1)
