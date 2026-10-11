@@ -52,7 +52,9 @@ def eye():
     for y in range(16):
         for x in range(16):
             d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
-            px.append((255, 230, 120, 255) if d < 3 else (220, 20, 20, 255))
+            # Solid glowing red with a slightly darker slit - the eye element is only ~2px, so
+            # any other colour in the middle of the texture is all that ends up showing.
+            px.append((150, 0, 0, 255) if abs(x - 7.5) < 1 else (235, 25, 25, 255))
     return px
 
 def el(frm, to, tex, rot=None):
